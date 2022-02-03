@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -50,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
-  static final DateFormat formatter = DateFormat('hh:MM:SS.ss');
+  static final DateFormat formatter = DateFormat('h:m - EEEE, d MMM y');
   final String formattednow = formatter.format(now);
 
   final String morningBackground = 'https://images.unsplash.com/photo-1415750465391-51ed29b1e610?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fG1vcm5pbmd8ZW58MHx8MHx8&w=1000&q=80';
@@ -69,6 +71,33 @@ Image getBackground(){
   return Image.network(nightBackground, fit: BoxFit.cover, width: double.infinity, height: double.infinity);
 }
 
+}
+
+Icon getIcon(){
+  if(now.hour > 7 && now.hour < 20 ){
+    
+    return Icon(Icons.wb_sunny_sharp, color: Colors.yellow, size: 30,);
+}  else{
+  return Icon(Icons.nights_stay, color: Colors.white, size: 30,);
+}
+}
+
+ Text getDayState(){
+  if(now.hour > 7 && now.hour < 20 ){
+    
+    return Text('Day',
+    style: GoogleFonts.lato(
+    fontSize: 25,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,));
+}  else{
+  return Text('Night',
+  style: GoogleFonts.lato(
+    fontSize: 25,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  ),);
+}
 }
 
  
@@ -100,7 +129,106 @@ Image getBackground(){
      body: Container(
        child: Stack(
          children: [
-           getBackground()
+           getBackground(),
+           Container(
+             decoration: BoxDecoration(color: Colors.black38),
+           ),
+           Container(
+             padding: EdgeInsets.all(20),
+             child: Column(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
+                 Expanded(
+                   child: Column(
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           SizedBox(height: 150,),
+                           Text(
+                             'Sevilla',
+                              style: GoogleFonts.lato(
+                             fontSize: 35, 
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white,
+                           ),),
+                           SizedBox(height: 5, ), 
+                           Text(
+
+                             formattednow.toString(),
+                              style: GoogleFonts.lato(
+                             fontSize: 22, 
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white,
+                           ),), 
+                           
+                         ],
+                       ),
+                       Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           Text(
+                             '24\u2103',
+                              style: GoogleFonts.lato(
+                             fontSize: 85, 
+                             fontWeight: FontWeight.w300,
+                             color: Colors.white,
+                           ),), 
+                           Row(
+                             children: [
+                               getIcon(),
+                               SizedBox(width: 10,),
+                               Text(
+                                 getDayState().toString(),
+                                  style: GoogleFonts.lato(
+                                 fontSize: 22, 
+                                 fontWeight: FontWeight.bold,
+                                 color: Colors.white,
+                               ),),
+                             ],
+                           ), 
+                 
+                         ],
+                       )
+                     ],
+                   ),
+                 ),
+                 Column(
+                   children: [
+                     
+                     Container(
+                       margin: EdgeInsets.symmetric(vertical: 40),
+                       decoration: BoxDecoration(
+                       border: Border.all(
+                         color: Colors.white30,
+                       )
+                     ),),
+                     Row(children: [
+                       Text(
+                           'Sevilla',
+                            style: GoogleFonts.lato(
+                           fontSize: 35, 
+                           fontWeight: FontWeight.bold,
+                           color: Colors.white,
+                         ),), 
+                         Text(
+                           'Hello',
+                            style: GoogleFonts.lato(
+                           fontSize: 22, 
+                           fontWeight: FontWeight.bold,
+                           color: Colors.white,
+                         ),), 
+                     ],)
+                     ]
+                     ,
+                 )
+               ],
+             ),
+             
+             
+           )
          ],
        ),
      ),
