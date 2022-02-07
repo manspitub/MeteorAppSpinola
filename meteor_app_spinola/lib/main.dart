@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:meteor_app_spinola/models/weather.dart';
+import 'package:http/http.dart' as http;  
+
 
 
 void main() {
@@ -52,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
-  static final DateFormat formatter = DateFormat('h:m - EEEE, d MMM y');
+  static final DateFormat formatter = DateFormat('hh:mm - EEEE, d MMM y');
   final String formattednow = formatter.format(now);
 
   final String morningBackground = 'https://images.unsplash.com/photo-1415750465391-51ed29b1e610?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fG1vcm5pbmd8ZW58MHx8MHx8&w=1000&q=80';
@@ -82,21 +87,12 @@ Icon getIcon(){
 }
 }
 
- Text getDayState(){
+  getDayState(){
   if(now.hour > 7 && now.hour < 20 ){
     
-    return Text('Day',
-    style: GoogleFonts.lato(
-    fontSize: 25,
-    fontWeight: FontWeight.w500,
-    color: Colors.white,));
+    return "Day";
 }  else{
-  return Text('Night',
-  style: GoogleFonts.lato(
-    fontSize: 25,
-    fontWeight: FontWeight.w500,
-    color: Colors.white,
-  ),);
+  return "Night";
 }
 }
 
@@ -142,13 +138,14 @@ Icon getIcon(){
                  Expanded(
                    child: Column(
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
                        Column(
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children: [
                            SizedBox(height: 150,),
                            Text(
-                             'Sevilla',
+                             _cityName(weather, index),
                               style: GoogleFonts.lato(
                              fontSize: 35, 
                              fontWeight: FontWeight.bold,
@@ -181,7 +178,7 @@ Icon getIcon(){
                                getIcon(),
                                SizedBox(width: 10,),
                                Text(
-                                 getDayState().toString(),
+                                 getDayState(),
                                   style: GoogleFonts.lato(
                                  fontSize: 22, 
                                  fontWeight: FontWeight.bold,
@@ -205,22 +202,120 @@ Icon getIcon(){
                          color: Colors.white30,
                        )
                      ),),
-                     Row(children: [
-                       Text(
-                           'Sevilla',
-                            style: GoogleFonts.lato(
-                           fontSize: 35, 
-                           fontWeight: FontWeight.bold,
-                           color: Colors.white,
-                         ),), 
-                         Text(
-                           'Hello',
-                            style: GoogleFonts.lato(
-                           fontSize: 22, 
-                           fontWeight: FontWeight.bold,
-                           color: Colors.white,
-                         ),), 
-                     ],)
+                     Padding(
+                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 20 ),
+                       child: Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         children: [
+                         Column(
+                           children: [
+                             Text(
+                             'Wind',
+                              style: GoogleFonts.lato(
+                             fontSize: 14, 
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white,
+                           ),), 
+                           Text(
+                             '10',
+                              style: GoogleFonts.lato(
+                             fontSize: 22, 
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white,
+                           ),), 
+                            Text(
+                             'km/h',
+                              style: GoogleFonts.lato(
+                             fontSize: 14, 
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white,
+                           ),), 
+                           SizedBox(
+                             width: 50,
+                             height: 10,
+                             child: Icon(Icons.air,
+                             color: Colors.white,
+
+                           ),
+                           
+                           )],
+                         ),
+                         Column(
+                           children: [
+                             Text(
+                             'Rain',
+                              style: GoogleFonts.lato(
+                             fontSize: 14, 
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white,
+                           ),), 
+                           Text(
+                             '10',
+                              style: GoogleFonts.lato(
+                             fontSize: 22, 
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white,
+                           ),), 
+                            Text(
+                             '%',
+                              style: GoogleFonts.lato(
+                             fontSize: 14, 
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white,
+                           ),), 
+                           SizedBox(
+                             width: 50,
+                             height: 10,
+                             child: LinearProgressIndicator(
+                               
+                               value: 10/100,
+                               backgroundColor: Colors.red,
+                               valueColor: AlwaysStoppedAnimation(Colors.blue),
+                             ),
+                           ),
+                           
+                           ],
+                         ),
+                         Column(
+                           children: [
+                             Text(
+                             'Humidity',
+                              style: GoogleFonts.lato(
+                             fontSize: 14, 
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white,
+                           ),), 
+                           Text(
+                             '10',
+                              style: GoogleFonts.lato(
+                             fontSize: 22, 
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white,
+                           ),), 
+                            Text(
+                             '%',
+                              style: GoogleFonts.lato(
+                             fontSize: 14, 
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white,
+                           ),), 
+                           SizedBox(
+                             width: 50,
+                             height: 10,
+                             child: LinearProgressIndicator(
+                               
+                               value: 10/100,
+                               backgroundColor: Colors.red,
+                               valueColor: AlwaysStoppedAnimation(Colors.blue),
+                             ),
+                           ),
+                           
+                           ],
+                         )
+                         
+                       ],),
+                       
+                     )
                      ]
                      ,
                  )
@@ -232,6 +327,25 @@ Icon getIcon(){
          ],
        ),
      ),
+
+    
     );
+
+    
+
+  
+  }
+
+  Widget _cityName(Weather weather, int index){
+
+
+  }
+
+  Future<List<Weather>> fetchWeather() async {
+    final response = await http.get(Uri.parse('https://swapi.dev/api/planets'));
+    if (response.statusCode == 200) {
+      return WeatherResponse.fromJson(jsonDecode(response.body)).weather;
+    } else {
+      throw Exception('Failed to load planets');  }
   }
 }
