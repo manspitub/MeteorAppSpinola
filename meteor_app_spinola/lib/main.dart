@@ -1,10 +1,15 @@
+
 import 'dart:convert';
+import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:meteor_app_spinola/data_service.dart';
 import 'package:meteor_app_spinola/models/weather.dart';
-import 'package:http/http.dart' as http;  
+import 'package:http/http.dart' as http;
+
+import 'models/weather.dart';  
 
 
 
@@ -54,6 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
    
 
+   
+
 
 
 
@@ -96,7 +103,17 @@ Icon getIcon(){
 }
 }
 
- 
+  final _cityTextController = TextEditingController();
+  final _dataService = DataService();
+
+  late WeatherResponse _response;
+
+  void _search() async{
+    final response = await _dataService.getWeather(_cityTextController.text);
+    setState(() => _response = response);
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -107,13 +124,17 @@ Icon getIcon(){
       extendBodyBehindAppBar: true,
      appBar: AppBar(
        
-       title: Text(""),
+       title: TextField(
+         controller: _cityTextController,
+         decoration: InputDecoration(labelText: 'City'),
+         textAlign: TextAlign.center,
+       ),
        backgroundColor: Colors.transparent,
        elevation: 0,
        leading: IconButton(
          alignment: Alignment.centerRight,
          icon: Icon(Icons.search, size: 30, color: Colors.white, ), 
-         onPressed: () {  },
+         onPressed: _search, 
          
        ),
        actions: [
@@ -129,7 +150,8 @@ Icon getIcon(){
            Container(
              decoration: BoxDecoration(color: Colors.black38),
            ),
-           Container(
+           if(_response != null)
+             Container(
              padding: EdgeInsets.all(20),
              child: Column(
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,13 +166,15 @@ Icon getIcon(){
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children: [
                            SizedBox(height: 150,),
-                           Text(
-                             _cityName(weather, index),
-                              style: GoogleFonts.lato(
-                             fontSize: 35, 
+                           Text('${_response.cityName}',style: GoogleFonts.lato(
+                             fontSize: 35,
                              fontWeight: FontWeight.bold,
-                             color: Colors.white,
+                             color: Colors.white
                            ),),
+                             
+
+                            
+                              
                            SizedBox(height: 5, ), 
                            Text(
 
@@ -166,13 +190,10 @@ Icon getIcon(){
                        Column(
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children: [
-                           Text(
-                             '24\u2103',
-                              style: GoogleFonts.lato(
-                             fontSize: 85, 
-                             fontWeight: FontWeight.w300,
-                             color: Colors.white,
-                           ),), 
+                           
+                           
+
+
                            Row(
                              children: [
                                getIcon(),
@@ -324,6 +345,8 @@ Icon getIcon(){
              
              
            )
+           
+           
          ],
        ),
      ),
@@ -336,16 +359,6 @@ Icon getIcon(){
   
   }
 
-  Widget _cityName(Weather weather, int index){
+  
 
-
-  }
-
-  Future<List<Weather>> fetchWeather() async {
-    final response = await http.get(Uri.parse('https://swapi.dev/api/planets'));
-    if (response.statusCode == 200) {
-      return WeatherResponse.fromJson(jsonDecode(response.body)).weather;
-    } else {
-      throw Exception('Failed to load planets');  }
-  }
 }
