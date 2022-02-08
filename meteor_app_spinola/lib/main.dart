@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meteor_app_spinola/data_service.dart';
 import 'package:meteor_app_spinola/models/weather.dart';
-import 'package:http/http.dart' as http;
 
 import 'models/weather.dart';  
 
@@ -106,27 +105,46 @@ Icon getIcon(){
   final _cityTextController = TextEditingController();
   final _dataService = DataService();
 
-  late WeatherResponse _response;
+   late WeatherResponse? _response = null;
 
   void _search() async{
     final response = await _dataService.getWeather(_cityTextController.text);
     setState(() => _response = response);
   }
 
+  getWeatherIcon(){
+
+    if(_response!.weatherInfo == "clear sky"){
+      return Icon(Icons.sunny, color: Colors.yellow,);
+    } else {
+      return Image.network(_response!.iconUrl);
+    }
+  }
+
+  
+  
+
+  
+
 
 
   @override
   Widget build(BuildContext context) {
 
-
+    
+    
 
     return Scaffold(
       extendBodyBehindAppBar: true,
      appBar: AppBar(
        
        title: TextField(
+         autocorrect: true,
+         style: TextStyle(
+           color: Colors.white,
+           fontSize: 20
+         ),
          controller: _cityTextController,
-         decoration: InputDecoration(labelText: 'City'),
          textAlign: TextAlign.center,
        ),
        backgroundColor: Colors.transparent,
@@ -141,7 +159,8 @@ Icon getIcon(){
          Icon(Icons.change_circle)
         
        ],
-
+       
+       
      ),
      body: Container(
        child: Stack(
@@ -166,7 +185,7 @@ Icon getIcon(){
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children: [
                            SizedBox(height: 150,),
-                           Text('${_response.cityName}',style: GoogleFonts.lato(
+                           Text('${_response?.cityName}',style: GoogleFonts.lato(
                              fontSize: 35,
                              fontWeight: FontWeight.bold,
                              color: Colors.white
@@ -191,15 +210,20 @@ Icon getIcon(){
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children: [
                            
-                           
+                           Text('${_response?.tempInfo.temperature }ºC',style: GoogleFonts.lato(
+                             fontSize: 35,
+                             fontWeight: FontWeight.bold,
+                             color: Colors.white
+                           ),),
 
 
                            Row(
+                             
                              children: [
-                               getIcon(),
+                               getWeatherIcon(),
                                SizedBox(width: 10,),
                                Text(
-                                 getDayState(),
+                                 _response!.weatherInfo.description,
                                   style: GoogleFonts.lato(
                                  fontSize: 22, 
                                  fontWeight: FontWeight.bold,
@@ -342,9 +366,12 @@ Icon getIcon(){
                  )
                ],
              ),
+            
              
              
            )
+           
+            
            
            
          ],

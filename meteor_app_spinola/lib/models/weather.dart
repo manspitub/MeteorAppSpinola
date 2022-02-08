@@ -22,16 +22,46 @@ class TemperatureInfo {
   }
 }
 
+class Weather {
+  Weather({
+    required this.id,
+    required this.main,
+    required this.description,
+    required this.icon,
+  });
+  late final int id;
+  late final String main;
+  late final String description;
+  late final String icon;
+  
+  Weather.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    main = json['main'];
+    description = json['description'];
+    icon = json['icon'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['main'] = main;
+    _data['description'] = description;
+    _data['icon'] = icon;
+    return _data;
+  }
+}
+
 class WeatherResponse {
   final String cityName;
-  final TemperatureInfo tempInfo;
+  final TemperatureInfo tempInfo; 
   final WeatherInfo weatherInfo;
+  
 
   String get iconUrl {
     return 'https://openweathermap.org/img/wn/${weatherInfo.icon}@2x.png';
   }
 
-  WeatherResponse({required this.cityName, required this.tempInfo, required this.weatherInfo});
+  WeatherResponse({ required this.cityName, required this.tempInfo, required this.weatherInfo});
 
   factory WeatherResponse.fromJson(Map<String, dynamic> json) {
     final cityName = json['name'];
