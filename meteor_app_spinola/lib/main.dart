@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: '',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   
 
   final String morningBackground = 'https://images.unsplash.com/photo-1415750465391-51ed29b1e610?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fG1vcm5pbmd8ZW58MHx8MHx8&w=1000&q=80';
-  final String eveningBackground = 'https://wallpaper.dog/large/20414986.jpg';
+  final String eveningBackground = 'https://images.unsplash.com/photo-1472120435266-53107fd0c44a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZXZlbmluZ3xlbnwwfHwwfHw%3D&w=1000&q=80';
   final String nightBackground = 'https://s1.dmcdn.net/v/IUNr81OHlmM0jS8wI/x1080';
 
    
@@ -118,12 +118,14 @@ Icon getIcon(){
 
   getWeatherIcon(){
 
-    if(_response!.iconUrl == "https://openweathermap.org/img/wn/01d@2x.png"){
+    if(_response!.iconUrl == "https://openweathermap.org/img/wn/01d@2x.png" || _response!.iconUrl == "https://openweathermap.org/img/wn/01n@2x.png"){
       return Image.network("https://cdn-icons-png.flaticon.com/512/169/169367.png", width: 30,);
     } else {
       return Image.network(_response!.iconUrl);
     }
   }
+
+  
 
   
   
@@ -239,9 +241,32 @@ Icon getIcon(){
                            Row(
                              mainAxisAlignment: MainAxisAlignment.end,
                              children: [
-                               Text('data')
+                               Image.network("https://cdn-icons-png.flaticon.com/512/578/578154.png", width: 40,),
+                               SizedBox(width: 10,),
+                               Text(
+                                 _response!.weatherInfo.description,
+                                  style: GoogleFonts.lato(
+                                 fontSize: 15, 
+                                 fontWeight: FontWeight.bold,
+                                 color: Colors.white,
+                               ),),
                              ],
-                           )
+                           ),
+                           Row(
+                             mainAxisAlignment: MainAxisAlignment.end,
+                             children: [
+                               Image.network("https://cdn-icons.flaticon.com/png/512/3920/premium/3920799.png?token=exp=1644440498~hmac=318e3ebec362f3e6e81e45dd1177b7fe", width: 40,),
+                               SizedBox(width: 10,),
+                               Text(
+                                 _response!.weatherInfo.description,
+                                  style: GoogleFonts.lato(
+                                 fontSize: 15, 
+                                 fontWeight: FontWeight.bold,
+                                 color: Colors.white,
+                               ),),
+                             ],
+                           ),
+
                  
                          ],
                        ),
