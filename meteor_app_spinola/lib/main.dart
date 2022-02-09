@@ -12,8 +12,11 @@ import 'models/weather.dart';
 
 
 
+
+
 void main() {
   runApp(const MyApp());
+  
 }
 
 class MyApp extends StatelessWidget {
@@ -65,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static final DateFormat formatter = DateFormat('hh:mm - EEEE, d MMM y');
   final String formattednow = formatter.format(now);
+  
 
   final String morningBackground = 'https://images.unsplash.com/photo-1415750465391-51ed29b1e610?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fG1vcm5pbmd8ZW58MHx8MHx8&w=1000&q=80';
   final String eveningBackground = 'https://wallpaper.dog/large/20414986.jpg';
@@ -103,7 +107,7 @@ Icon getIcon(){
 }
 
   final _cityTextController = TextEditingController();
-  final _dataService = DataService();
+  final _dataService = DataServiceWeather();
 
    late WeatherResponse? _response = null;
 
@@ -331,7 +335,7 @@ Icon getIcon(){
                              color: Colors.white,
                            ),), 
                            Text(
-                             '10',
+                             _response!.main.humidity.toString(),
                               style: GoogleFonts.lato(
                              fontSize: 22, 
                              fontWeight: FontWeight.bold,

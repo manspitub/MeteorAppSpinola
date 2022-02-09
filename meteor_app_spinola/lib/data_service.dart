@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:meteor_app_spinola/models/clime.dart';
 
 import 'models/weather.dart';
 
-class DataService {
+class DataServiceWeather {
   Future<WeatherResponse> getWeather(String city) async {
     // api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
 
