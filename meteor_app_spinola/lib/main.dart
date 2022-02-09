@@ -114,8 +114,8 @@ Icon getIcon(){
 
   getWeatherIcon(){
 
-    if(_response!.weatherInfo == "clear sky"){
-      return Icon(Icons.sunny, color: Colors.yellow,);
+    if(_response!.iconUrl == "https://openweathermap.org/img/wn/01d@2x.png"){
+      return Image.network("https://cdn-icons-png.flaticon.com/512/169/169367.png", width: 30,);
     } else {
       return Image.network(_response!.iconUrl);
     }
@@ -262,7 +262,7 @@ Icon getIcon(){
                              color: Colors.white,
                            ),), 
                            Text(
-                             '10',
+                             _response!.wind.speed.toString(),
                               style: GoogleFonts.lato(
                              fontSize: 22, 
                              fontWeight: FontWeight.bold,

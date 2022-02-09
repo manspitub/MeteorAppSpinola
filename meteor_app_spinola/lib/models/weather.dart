@@ -22,31 +22,23 @@ class TemperatureInfo {
   }
 }
 
-class Weather {
-  Weather({
-    required this.id,
-    required this.main,
-    required this.description,
-    required this.icon,
+class Wind {
+  Wind({
+    required this.speed,
+    required this.deg,
   });
-  late final int id;
-  late final String main;
-  late final String description;
-  late final String icon;
+  late final double speed;
+  late final int deg;
   
-  Weather.fromJson(Map<String, dynamic> json){
-    id = json['id'];
-    main = json['main'];
-    description = json['description'];
-    icon = json['icon'];
+  Wind.fromJson(Map<String, dynamic> json){
+    speed = json['speed'];
+    deg = json['deg'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['main'] = main;
-    _data['description'] = description;
-    _data['icon'] = icon;
+    _data['speed'] = speed;
+    _data['deg'] = deg;
     return _data;
   }
 }
@@ -55,13 +47,14 @@ class WeatherResponse {
   final String cityName;
   final TemperatureInfo tempInfo; 
   final WeatherInfo weatherInfo;
+  final Wind wind;
   
 
   String get iconUrl {
     return 'https://openweathermap.org/img/wn/${weatherInfo.icon}@2x.png';
   }
 
-  WeatherResponse({ required this.cityName, required this.tempInfo, required this.weatherInfo});
+  WeatherResponse({ required this.cityName, required this.tempInfo, required this.weatherInfo, required this.wind});
 
   factory WeatherResponse.fromJson(Map<String, dynamic> json) {
     final cityName = json['name'];
@@ -72,7 +65,10 @@ class WeatherResponse {
     final weatherInfoJson = json['weather'][0];
     final weatherInfo = WeatherInfo.fromJson(weatherInfoJson);
 
+    final windJson = json['wind'];
+    final wind = Wind.fromJson(windJson);
+
     return WeatherResponse(
-        cityName: cityName, tempInfo: tempInfo, weatherInfo: weatherInfo);
+        cityName: cityName, tempInfo: tempInfo, weatherInfo: weatherInfo, wind: wind);
   }
 }
