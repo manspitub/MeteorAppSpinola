@@ -80,6 +80,8 @@ class Main {
   }
 }
 
+
+
 class WeatherResponse {
   final String cityName;
   final TemperatureInfo tempInfo; 

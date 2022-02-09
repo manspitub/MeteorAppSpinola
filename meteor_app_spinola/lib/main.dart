@@ -214,8 +214,9 @@ Icon getIcon(){
                          crossAxisAlignment: CrossAxisAlignment.start,
                          children: [
                            
+                           
                            Text('${_response?.tempInfo.temperature }ºC',style: GoogleFonts.lato(
-                             fontSize: 35,
+                             fontSize: 20,
                              fontWeight: FontWeight.bold,
                              color: Colors.white
                            ),),
@@ -229,15 +230,22 @@ Icon getIcon(){
                                Text(
                                  _response!.weatherInfo.description,
                                   style: GoogleFonts.lato(
-                                 fontSize: 22, 
+                                 fontSize: 15, 
                                  fontWeight: FontWeight.bold,
                                  color: Colors.white,
                                ),),
                              ],
                            ), 
+                           Row(
+                             mainAxisAlignment: MainAxisAlignment.end,
+                             children: [
+                               Text('data')
+                             ],
+                           )
                  
                          ],
-                       )
+                       ),
+                      
                      ],
                    ),
                  ),
@@ -292,21 +300,21 @@ Icon getIcon(){
                          Column(
                            children: [
                              Text(
-                             'Rain',
+                             'Pressure',
                               style: GoogleFonts.lato(
                              fontSize: 14, 
                              fontWeight: FontWeight.bold,
                              color: Colors.white,
                            ),), 
                            Text(
-                             '10',
+                             _response!.main.pressure.toString(),
                               style: GoogleFonts.lato(
                              fontSize: 22, 
                              fontWeight: FontWeight.bold,
                              color: Colors.white,
                            ),), 
                             Text(
-                             '%',
+                             'pa',
                               style: GoogleFonts.lato(
                              fontSize: 14, 
                              fontWeight: FontWeight.bold,
@@ -315,12 +323,7 @@ Icon getIcon(){
                            SizedBox(
                              width: 50,
                              height: 10,
-                             child: LinearProgressIndicator(
-                               
-                               value: 10/100,
-                               backgroundColor: Colors.red,
-                               valueColor: AlwaysStoppedAnimation(Colors.blue),
-                             ),
+                             child: Icon(Icons.thermostat, color: Colors.white,)
                            ),
                            
                            ],
@@ -353,7 +356,7 @@ Icon getIcon(){
                              height: 10,
                              child: LinearProgressIndicator(
                                
-                               value: 10/100,
+                               value: _response!.main.humidity/100,
                                backgroundColor: Colors.red,
                                valueColor: AlwaysStoppedAnimation(Colors.blue),
                              ),
@@ -370,10 +373,12 @@ Icon getIcon(){
                  )
                ],
              ),
+             
             
              
              
-           )
+           ) 
+              
            
             
            
