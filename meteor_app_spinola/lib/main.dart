@@ -50,8 +50,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   static final DateTime now = DateTime.now();
 
-  static final DateFormat formatter = DateFormat('hh:mm - EEEE, d MMM y');
-  final String formattednow = formatter.format(now);
+  static final DateFormat formatter = DateFormat('HH:MM - EEEE, d MMM y');
+  final String formattednow = formatter.format(now);  
 
   final String morningBackground =
       'https://images.unsplash.com/photo-1415750465391-51ed29b1e610?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fG1vcm5pbmd8ZW58MHx8MHx8&w=1000&q=80';
@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
       'https://s1.dmcdn.net/v/IUNr81OHlmM0jS8wI/x1080';
 
   Image getBackground() {
-    if (now.hour > 7 && now.hour < 14) {
+    if (now.hour > 7 && now.hour < 14) {  
       return Image.network(
         morningBackground,
         fit: BoxFit.cover,
@@ -203,7 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 height: 150,
                               ),
                               Text(
-                                '${_response?.cityName}',
+                                '${_response?.cityName}'', ''(${_response!.sys.country})',
                                 style: GoogleFonts.lato(
                                     fontSize: 35,
                                     fontWeight: FontWeight.bold,
