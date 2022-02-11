@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   late WeatherResponse? _response = null;
-  late ClimeResponse? _responseClime = null;
+
   
 
   void _search() async {
@@ -129,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String apiKey = "aabaacf9f2d7e0e1d88180b9f5eb83d5";
     
 
-    var url = "https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&appid=$apiKey&units=metric";
+    var url = "https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&exclude=minutely,daily&appid=$apiKey&units=metric";
 
     final response = await http.get(Uri.parse(url));
 
@@ -271,14 +271,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ]
             ),
             child: Column(children: [
-              Text(_responseClime!.hourly[index].temp.toString(),
+              Text(hourly.temp.toString(),
               style: GoogleFonts.lato(
                    fontSize: 171,
                    fontWeight: FontWeight.w500,
                    color: Colors.white),),
               Image.network(_response!.iconUrl),
               Text(
-                getTimefromTimestamp(_responseClime!.hourly[index].dt),
+                getTimefromTimestamp(hourly.dt),
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
@@ -398,11 +398,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               ),
-                              Row(
-                                children: [
-                                  Text(_response!.coord.lat.toString()+" "+_response!.coord.lon.toString())
-                                ],
-                              ),
+                             
                               Row(
                                 children: [
                                   getWeatherIcon(),
