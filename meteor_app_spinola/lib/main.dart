@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meteor_app_spinola/data_service.dart';
+
+import 'package:meteor_app_spinola/models/clime.dart';
+import 'package:meteor_app_spinola/models/forecast.dart';
 import 'package:meteor_app_spinola/models/weather.dart';
+import 'package:http/http.dart' as http;
 
 import 'models/weather.dart';
 
@@ -108,22 +112,45 @@ class _MyHomePageState extends State<MyHomePage> {
   final _cityTextController = TextEditingController();
   final _dataService = DataServiceWeather();
 
+
   late WeatherResponse? _response = null;
+  late ClimeResponse? _responseClime = null;
+  
 
   void _search() async {
     final response = await _dataService.getWeather(_cityTextController.text);
+
     setState(() => _response = response);
+
+
   }
+
+  Future <List<Hourly>> getClime(String lat, String lon) async {
+    String apiKey = "aabaacf9f2d7e0e1d88180b9f5eb83d5";
+    
+
+    var url = "https://api.openweathermap.org/data/2.5/onecall?lat=$lat&lon=$lon&appid=$apiKey&units=metric";
+
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      return ClimeResponse.fromJson(jsonDecode(response.body)).hourly;
+  } else {
+    throw Exception('Failed to load hourly weather');
+  }
+  }
+
+  
 
   getWeatherIcon() {
     if (_response!.iconUrl == "https://openweathermap.org/img/wn/01d@2x.png" ||
         _response!.iconUrl == "https://openweathermap.org/img/wn/01n@2x.png") {
       return Image.network(
         "https://cdn-icons-png.flaticon.com/512/169/169367.png",
-        width: 30,
+        width: 50,
       );
     } else {
-      return Image.network(_response!.iconUrl);
+      return Image.network(_response!.iconUrl, width: 50,);
     }
   }
 
@@ -150,6 +177,125 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return formatted;
   }
+
+  /*Widget _hourlyList(){
+    return SizedBox(
+
+      height: 270,
+
+      child: ListView.builder(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemCount: 10,
+        itemBuilder: (context, index){
+          return 
+        },
+      ),
+
+    );
+  }*/
+
+ /* Widget hourlyItem(){
+    return Stack(
+      alignment: AlignmentDirectional.bottomCenter,
+
+      children: <Widget>[
+        Container(
+
+          margin: EdgeInsets.only(left: 20, bottom: 20, right: 20),
+          height: 110.0,
+          width: 110,
+
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(110.0),
+            border: Border.all(
+              color: Colors.yellow,
+              width: 2.0
+            )
+          ),
+          child: ClipOval(
+            child: 
+          ),
+          
+        )
+      ],
+    )
+  }*/
+
+  getTimefromTimestamp(int timestamp){
+    var date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    var formatter = new DateFormat('HH:MM a');
+    return formatter.format(date);
+  }
+  Widget viewsHourly(List<Hourly> hourly){
+
+    return SizedBox(
+
+      height: 260,
+
+      child: ListView.builder(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemCount: 10,
+        itemBuilder: (context, index){
+          return hourlyItem(hourly.elementAt(index),index);
+        },
+      ),
+    );
+    
+
+    
+  }
+
+  Widget hourlyItem(Hourly hourly, int index){
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 0.0),
+      height: 150,
+      child: ListView(
+        padding: const EdgeInsets.only(left: 8, top: 0, bottom: 0, right: 0),
+        scrollDirection: Axis.horizontal,
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 10, top: 15, bottom: 15, right: 10),
+            margin: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(18)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  spreadRadius: 2,
+                  blurRadius: 2,
+                  offset: Offset(0,1 ),
+                )
+              ]
+            ),
+            child: Column(children: [
+              Text(_responseClime!.hourly[index].temp.toString(),
+              style: GoogleFonts.lato(
+                   fontSize: 171,
+                   fontWeight: FontWeight.w500,
+                   color: Colors.white),),
+              Image.network(_response!.iconUrl),
+              Text(
+                getTimefromTimestamp(_responseClime!.hourly[index].dt),
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                  color: Colors.grey
+                ),
+
+            
+            )],),
+          )
+        ],
+           
+      
+      ),
+    );
+  }
+  late Future<List<Hourly>> items = getClime(_response!.coord.lat.toString(), _response!.coord.lon.toString());
+
 
   
 
@@ -221,6 +367,26 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ),
                             ],
+                            
+                          ),
+                          Column(
+                            children: <Widget>[
+
+                              Center(child: FutureBuilder<List<Hourly>>(
+                                future: items,
+                                builder: ((context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return viewsHourly(snapshot.data!);
+                                  } else if(snapshot.hasError){
+                                    return Text('${snapshot.error}');
+                                  }
+
+                                  return const CircularProgressIndicator();
+                                }),
+                              ),)
+
+
+                            ]
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,9 +394,14 @@ class _MyHomePageState extends State<MyHomePage> {
                               Text(
                                 '${_response?.tempInfo.temperature}ºC',
                                 style: GoogleFonts.lato(
-                                    fontSize: 20,
+                                    fontSize: 50,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
+                              ),
+                              Row(
+                                children: [
+                                  Text(_response!.coord.lat.toString()+" "+_response!.coord.lon.toString())
+                                ],
                               ),
                               Row(
                                 children: [
@@ -241,7 +412,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Text(
                                     _response!.weatherInfo.description,
                                     style: GoogleFonts.lato(
-                                      fontSize: 15,
+                                      fontSize: 30,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
@@ -253,7 +424,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   Image.network(
                                     "https://cdn-icons-png.flaticon.com/512/578/578154.png",
-                                    width: 40,
+                                    width: 50,
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -261,7 +432,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Text(
                                     _getSunriseDateTime(),
                                     style: GoogleFonts.lato(
-                                      fontSize: 15,
+                                      fontSize: 30,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
@@ -273,7 +444,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   Image.network(
                                     "https://cdn-icons-png.flaticon.com/512/3226/3226463.png",
-                                    width: 40,
+                                    width: 50,
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -281,7 +452,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Text(
                                     _getSunsetDateTime(),
                                     style: GoogleFonts.lato(
-                                      fontSize: 15,
+                                      fontSize: 30,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),

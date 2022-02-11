@@ -43,6 +43,27 @@ class Wind {
   }
 }
 
+class Coord {
+  Coord({
+    required this.lon,
+    required this.lat,
+  });
+  late final double lon;
+  late final double lat;
+  
+  Coord.fromJson(Map<String, dynamic> json){
+    lon = json['lon'];
+    lat = json['lat'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['lon'] = lon;
+    _data['lat'] = lat;
+    return _data;
+  }
+}
+
 class Sys {
   Sys({
     required this.type,
@@ -122,13 +143,14 @@ class WeatherResponse {
   final Wind wind;
   final Main main;
   final Sys sys;
+  final Coord coord;
   
 
   String get iconUrl {
     return 'https://openweathermap.org/img/wn/${weatherInfo.icon}@2x.png';
   }
 
-  WeatherResponse({required this.sys, required this.cityName, required this.tempInfo, required this.weatherInfo, required this.wind, required this.main});
+  WeatherResponse({required this.coord, required this.sys, required this.cityName, required this.tempInfo, required this.weatherInfo, required this.wind, required this.main});
 
   factory WeatherResponse.fromJson(Map<String, dynamic> json) {
     final cityName = json['name'];
@@ -148,7 +170,10 @@ class WeatherResponse {
     final sysJson = json['sys'];
     final sys =Sys.fromJson(sysJson);
 
+    final coordJson = json['coord'];
+    final coord = Coord.fromJson(coordJson);
+
     return WeatherResponse(
-        cityName: cityName, tempInfo: tempInfo, weatherInfo: weatherInfo, wind: wind, main: main, sys: sys);
+        cityName: cityName, tempInfo: tempInfo, weatherInfo: weatherInfo, wind: wind, main: main, sys: sys, coord: coord);
   }
 }

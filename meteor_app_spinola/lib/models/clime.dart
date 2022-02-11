@@ -32,6 +32,8 @@ class Hourly {
   late final double windGust;
   late final List<Weather> weather;
   late final int? pop;
+
+  
   
   Hourly.fromJson(Map<String, dynamic> json){
     dt = json['dt'];
@@ -118,4 +120,8 @@ class Weather {
     _data['icon'] = icon;
     return _data;
   }
+  String get iconUrl{
+    return 'https://openweathermap.org/img/wn/${icon}@2x.png';
 }
+}
+
