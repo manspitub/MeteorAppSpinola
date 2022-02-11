@@ -107,6 +107,10 @@ class Weather {
     _data['icon'] = icon;
     return _data;
   }
+
+  String get iconUrl {
+    return 'https://openweathermap.org/img/wn/${icon}@2x.png';
+  }
 }
 
 class Hourly {

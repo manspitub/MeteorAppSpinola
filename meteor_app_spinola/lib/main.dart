@@ -146,7 +146,8 @@ class _MyHomePageState extends State<MyHomePage> {
         _response!.iconUrl == "https://openweathermap.org/img/wn/01n@2x.png") {
       return Image.network(
         "https://cdn-icons-png.flaticon.com/512/169/169367.png",
-        width: 50,
+        width: 70,
+
       );
     } else {
       return Image.network(_response!.iconUrl, width: 50,);
@@ -230,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return SizedBox(
 
-      height: 160,
+      height: 152,
 
       child: ListView.builder(
         shrinkWrap: true,
@@ -249,7 +250,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget hourlyItem(Hourly hourly, int index){
     return Container(
       margin: EdgeInsets.symmetric(vertical: 0.0),
-      height: 30,
+      height: 50,
       child: 
           Container(
             padding: const EdgeInsets.only(left: 10, top: 10, bottom: 15, right: 10),
@@ -267,17 +268,17 @@ class _MyHomePageState extends State<MyHomePage> {
               ]
             ),
             child: Column(children: [
-              Text(hourly.temp.toString(),
+              Text(hourly.temp.toString()+" ºC",
               style: GoogleFonts.lato(
-                   fontSize: 17,
-                   fontWeight: FontWeight.w500,
+                   fontSize: 20,
+                   fontWeight: FontWeight.bold,
                    color: Colors.black),),
-              Image.network(_response!.iconUrl),
+              getWeatherIcon(),
               Text(
                 getTimefromTimestamp(hourly.dt),
                 style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
                   color: Colors.grey
                 ),
 
@@ -341,7 +342,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: 200,
+                                height: 100,
                               ),
                               Text(
                                 '${_response?.cityName}'', ''(${_response!.sys.country})',
@@ -387,7 +388,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${_response?.tempInfo.temperature}ºC',
+                                '${_response?.tempInfo.temperature} ºC (Ahora)' ,
                                 style: GoogleFonts.lato(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -415,11 +416,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   Image.network(
                                     "https://cdn-icons-png.flaticon.com/512/578/578154.png",
-                                    width: 10,
+                                    width: 30,
                                   ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
+                                  
                                   Text(
                                     _getSunriseDateTime(),
                                     style: GoogleFonts.lato(
@@ -435,11 +434,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   Image.network(
                                     "https://cdn-icons-png.flaticon.com/512/3226/3226463.png",
-                                    width: 10,
+                                    width: 30,
                                   ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
+                                  
                                   Text(
                                     _getSunsetDateTime(),
                                     style: GoogleFonts.lato(
