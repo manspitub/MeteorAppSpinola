@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:meteor_app_spinola/data_service.dart';
 
 import 'package:meteor_app_spinola/models/clime.dart';
-import 'package:meteor_app_spinola/models/forecast.dart';
 import 'package:meteor_app_spinola/models/weather.dart';
 import 'package:http/http.dart' as http;
 
@@ -231,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return SizedBox(
 
-      height: 260,
+      height: 160,
 
       child: ListView.builder(
         shrinkWrap: true,
@@ -250,16 +249,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget hourlyItem(Hourly hourly, int index){
     return Container(
       margin: EdgeInsets.symmetric(vertical: 0.0),
-      height: 150,
-      child: ListView(
-        padding: const EdgeInsets.only(left: 8, top: 0, bottom: 0, right: 0),
-        scrollDirection: Axis.horizontal,
-        children: [
+      height: 30,
+      child: 
           Container(
-            padding: const EdgeInsets.only(left: 10, top: 15, bottom: 15, right: 10),
+            padding: const EdgeInsets.only(left: 10, top: 10, bottom: 15, right: 10),
             margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.transparent,
               borderRadius: BorderRadius.all(Radius.circular(18)),
               boxShadow: [
                 BoxShadow(
@@ -273,9 +269,9 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(children: [
               Text(hourly.temp.toString(),
               style: GoogleFonts.lato(
-                   fontSize: 171,
+                   fontSize: 17,
                    fontWeight: FontWeight.w500,
-                   color: Colors.white),),
+                   color: Colors.black),),
               Image.network(_response!.iconUrl),
               Text(
                 getTimefromTimestamp(hourly.dt),
@@ -287,12 +283,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
             
             )],),
-          )
-        ],
+    ));
+        
            
       
-      ),
-    );
+      
   }
   late Future<List<Hourly>> items = getClime(_response!.coord.lat.toString(), _response!.coord.lon.toString());
 
@@ -346,12 +341,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: 150,
+                                height: 200,
                               ),
                               Text(
                                 '${_response?.cityName}'', ''(${_response!.sys.country})',
                                 style: GoogleFonts.lato(
-                                    fontSize: 35,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               ),
@@ -361,7 +356,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               Text(
                                 formattednow.toString(),
                                 style: GoogleFonts.lato(
-                                  fontSize: 22,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -394,7 +389,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               Text(
                                 '${_response?.tempInfo.temperature}ºC',
                                 style: GoogleFonts.lato(
-                                    fontSize: 50,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               ),
@@ -408,7 +403,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Text(
                                     _response!.weatherInfo.description,
                                     style: GoogleFonts.lato(
-                                      fontSize: 30,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
@@ -420,7 +415,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   Image.network(
                                     "https://cdn-icons-png.flaticon.com/512/578/578154.png",
-                                    width: 50,
+                                    width: 10,
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -428,7 +423,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Text(
                                     _getSunriseDateTime(),
                                     style: GoogleFonts.lato(
-                                      fontSize: 30,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
@@ -440,7 +435,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   Image.network(
                                     "https://cdn-icons-png.flaticon.com/512/3226/3226463.png",
-                                    width: 50,
+                                    width: 10,
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -448,7 +443,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Text(
                                     _getSunsetDateTime(),
                                     style: GoogleFonts.lato(
-                                      fontSize: 30,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
