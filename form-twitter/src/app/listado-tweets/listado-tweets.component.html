@@ -1,0 +1,36 @@
+
+
+<ul *ngFor="let tweet of listaTweets">
+    <div class="flex" >
+        <div class="">
+          <img
+            class="inline-block rounded-full shadow-lg w-full h-[36px]"
+            src="{{tweet.user.photoUrl}}"
+          />
+        </div>
+        <div class="flex-1">
+          <div class="flex">
+            <!-- username -->
+            <div class="">
+              <a href="">
+                <span class="font-semibold">{{tweet.user.username}}</span>
+                <span class="ml-1 mr-1" *ngIf="tweet.user.descripcion">@{{tweet.user.descripcion}}</span>
+              </a>
+            </div>
+            <div class="">. {{tweet.user.created}}</div>
+          </div>
+          <div>
+            <!-- message -->
+            {{tweet.mensaje}}
+          </div>
+          <div class="flex justify-center">
+            <!-- actions -->
+            <div  class="transition-all  mr-10 cursor-pointer hover:text-red-500 flex items-center" >
+              <span>{{tweet.likes.length}} <mat-icon>favorite</mat-icon>
+              </span>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+</ul>

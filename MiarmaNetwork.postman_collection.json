@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "e9927bdb-13d9-49c0-89e0-64fb6fb2288f",
+		"name": "MiarmaNetwork",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Access Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "client_id",
+							"value": "{{APP_ID}}",
+							"type": "default"
+						},
+						{
+							"key": "client_secret",
+							"value": "1681ea2f8a157b22aa2ebbaa53358104",
+							"type": "default"
+						},
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "default"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://httpstat.us/200",
+							"type": "default"
+						},
+						{
+							"key": "code",
+							"value": "AQDJ1EW9zQfKeAuwkbaA9BsJVVjHwlj7sNsznByXa5lmWfPPzp6PTW68_9OWL3AvREJa6IKobrrnS1eYC5XvyNx3elozV7PdDaXJPw_Lvnz-x4RERkJ1gqXxq2NPUmhKmLLT-9-oWNujb0LxBWT5u7T_Utbwkcq5rL-z7f3wd1RWiN8qOX8i6iW2dRYCUys160zObs1SHSVm5tyE1rKXshDK7D_8O82m_HxU2zr7zzGkYA",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api.instagram.com/oauth/access_token",
+					"protocol": "https",
+					"host": [
+						"api",
+						"instagram",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"access_token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET TOKEN",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ROOT_URL}}/access_token?client_secret={{APP_SECRET}}&access_token=IGQVJXei0xdjA4MUstcDU3anZAmNnFXYnFjczc4X2kyRlFyODlaZAXJLSGJOVHRwLUFSOVl3R21zYUFEc3FPc01fZAUU5NXFrSFh4Qnl2UlFjbEctbHpXMGdvTFJhUnJHNFF0V1RCQmJmU3NSTkpQd1ptYnpzR2pLSEVDbXZAR&grant_type=ig_exchange_token",
+					"host": [
+						"{{ROOT_URL}}"
+					],
+					"path": [
+						"",
+						"access_token"
+					],
+					"query": [
+						{
+							"key": "client_secret",
+							"value": "{{APP_SECRET}}"
+						},
+						{
+							"key": "access_token",
+							"value": "IGQVJXei0xdjA4MUstcDU3anZAmNnFXYnFjczc4X2kyRlFyODlaZAXJLSGJOVHRwLUFSOVl3R21zYUFEc3FPc01fZAUU5NXFrSFh4Qnl2UlFjbEctbHpXMGdvTFJhUnJHNFF0V1RCQmJmU3NSTkpQd1ptYnpzR2pLSEVDbXZAR"
+						},
+						{
+							"key": "grant_type",
+							"value": "ig_exchange_token"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET USER ME",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://graph.instagram.com/v13.0/me?fields=media_count,account_type,username&access_token=IGQVJWMmpYdkx4akszNHBLcTNyRmM3bm5HeUZAFckxiS0NCTjg2X09EdFFVNGd5MGcwSlk0RHBKZAFRpTzd2ZAEJZAaFVFbURGbmRlNi1xby1JNFFHNU1DcmI1cVA5OVpSaS00RkxNdDVuOW1NWHZAJSzdyZAwZDZD",
+					"protocol": "https",
+					"host": [
+						"graph",
+						"instagram",
+						"com"
+					],
+					"path": [
+						"v13.0",
+						"me"
+					],
+					"query": [
+						{
+							"key": "fields",
+							"value": "media_count,account_type,username"
+						},
+						{
+							"key": "access_token",
+							"value": "IGQVJWMmpYdkx4akszNHBLcTNyRmM3bm5HeUZAFckxiS0NCTjg2X09EdFFVNGd5MGcwSlk0RHBKZAFRpTzd2ZAEJZAaFVFbURGbmRlNi1xby1JNFFHNU1DcmI1cVA5OVpSaS00RkxNdDVuOW1NWHZAJSzdyZAwZDZD"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET USER MEDIA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://graph.instagram.com/v13.0/17841401196573123/media?access_token=IGQVJYemJ1YmxjTkwyd09MTnU1RWU0U0dtS1pjYS1lOVhJU3ZAmLVpTcjc1M3BCLVVaT2pNaVR6WW54VkR1Q050bjBwM0hPZA2lIUVJOeHVHTFNPZAV9SVXhmd3JmRTRIZAUg1TzU1NXU0VzVvcnF1d21CXwZDZD",
+					"protocol": "https",
+					"host": [
+						"graph",
+						"instagram",
+						"com"
+					],
+					"path": [
+						"v13.0",
+						"17841401196573123",
+						"media"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "IGQVJYemJ1YmxjTkwyd09MTnU1RWU0U0dtS1pjYS1lOVhJU3ZAmLVpTcjc1M3BCLVVaT2pNaVR6WW54VkR1Q050bjBwM0hPZA2lIUVJOeHVHTFNPZAV9SVXhmd3JmRTRIZAUg1TzU1NXU0VzVvcnF1d21CXwZDZD"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET USER FULL DATA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.instagram.com/manspitub/?__a=1",
+					"protocol": "https",
+					"host": [
+						"www",
+						"instagram",
+						"com"
+					],
+					"path": [
+						"manspitub",
+						""
+					],
+					"query": [
+						{
+							"key": "__a",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET MEDIA DISPLAYED",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://graph.instagram.com/18059112139273906?fields=id,media_type,media_url,username,timestamp&access_token=IGQVJYemJ1YmxjTkwyd09MTnU1RWU0U0dtS1pjYS1lOVhJU3ZAmLVpTcjc1M3BCLVVaT2pNaVR6WW54VkR1Q050bjBwM0hPZA2lIUVJOeHVHTFNPZAV9SVXhmd3JmRTRIZAUg1TzU1NXU0VzVvcnF1d21CXwZDZD",
+					"protocol": "https",
+					"host": [
+						"graph",
+						"instagram",
+						"com"
+					],
+					"path": [
+						"18059112139273906"
+					],
+					"query": [
+						{
+							"key": "fields",
+							"value": "id,media_type,media_url,username,timestamp"
+						},
+						{
+							"key": "access_token",
+							"value": "IGQVJYemJ1YmxjTkwyd09MTnU1RWU0U0dtS1pjYS1lOVhJU3ZAmLVpTcjc1M3BCLVVaT2pNaVR6WW54VkR1Q050bjBwM0hPZA2lIUVJOeHVHTFNPZAV9SVXhmd3JmRTRIZAUg1TzU1NXU0VzVvcnF1d21CXwZDZD"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

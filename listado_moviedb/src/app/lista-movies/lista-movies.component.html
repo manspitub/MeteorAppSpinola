@@ -1,0 +1,14 @@
+<div class="scroll-container" fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="20px grid" fxFlexFill fxLayoutAlign="start start">
+    <mat-card class="movie-card" *ngFor="let popular of listaMovies">
+        <mat-card-content>
+            <div class="movie-image">
+                <img  [src]="getImageUrl(popular)" height="200px" width="100%" />
+            </div>
+            <h3 class="movie-title">{{popular.name}}</h3>
+            <p class="movie-overview">{{popular.overview}}</p>
+            <circle-progress class="movie-rate" [percent]="popular.vote_average * 10" [maxPercent]="100"
+                [title]="(popular.vote_average * 10).toString()+'%'" [radius]="20"></circle-progress>
+        </mat-card-content>
+        
+    </mat-card>
+    </div>

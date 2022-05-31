@@ -1,0 +1,35 @@
+<div class="login-container">
+    <div class="login-content">
+      <mat-toolbar class="login-toolbar" color="primary">MiniTwitter</mat-toolbar>
+      <mat-card>
+        <form [formGroup]="register">
+
+            <mat-form-field>
+                <mat-icon matPrefix>person</mat-icon>
+                <input autofocus type="text" matInput  formControlName="username">
+              </mat-form-field>
+      
+          <mat-form-field>
+            <mat-icon matPrefix>email</mat-icon>
+            <input autofocus type="text" matInput  formControlName="email">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-icon matPrefix>lock_outline</mat-icon>
+            <input type="password" autocomplete="false" matInput  formControlName="password">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-icon matPrefix>code</mat-icon>
+            <input type="text" autocomplete="false" matInput  formControlName="code">
+          </mat-form-field>
+
+          <button  type="submit" mat-raised-button color="primary" (click)="doRegister()">Login</button>
+
+          <div class="container signin">
+            <p style="color: blue;">Ya tienes cuenta? Logueate <a [routerLink]="['']">Log in</a></p>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </div>
