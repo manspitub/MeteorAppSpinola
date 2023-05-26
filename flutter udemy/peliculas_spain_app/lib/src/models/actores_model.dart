@@ -1,11 +1,10 @@
 class Cast {
 
-  List<Actor> actores = new List();
+  List<Actor> actores = [];
 
 
   Cast.fromJsonList( List<dynamic> jsonList  ){
 
-    if ( jsonList == null ) return;
 
     jsonList.forEach( (item) {
       final actor = Actor.fromJsonMap(item);
